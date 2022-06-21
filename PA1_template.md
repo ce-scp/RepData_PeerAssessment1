@@ -5,63 +5,116 @@ output:
     keep_md: true
 ---
 
-```{r}
+
+```r
 Sys.setlocale("LC_ALL","English")
+```
+
+```
+## [1] "LC_COLLATE=English_United States.1252;LC_CTYPE=English_United States.1252;LC_MONETARY=English_United States.1252;LC_NUMERIC=C;LC_TIME=English_United States.1252"
 ```
 
 ## Loading and preprocessing the data
 
-```{r}
+
+```r
 data <- read.csv("activity.csv")
 ```
 
 
 
 ## What is mean total number of steps taken per day?
-```{r}
-library(dplyr)
 
+```r
+library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
 stepsPerDay <- data %>%
   group_by(date) %>%
   summarise(total = sum(steps))
 
 hist(stepsPerDay$total, main="Steps taken per day", xlab="Total steps taken per day", breaks=15)
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 Mean of the total number of steps taken per day: 
-```{r}
+
+```r
 mean(stepsPerDay$total, na.rm=TRUE)
+```
+
+```
+## [1] 10766.19
 ```
 
 
 Median of the total number of steps taken per day: 
-```{r}
+
+```r
 median(stepsPerDay$total, na.rm=TRUE)
+```
+
+```
+## [1] 10765
 ```
 
 
 ## What is the average daily activity pattern?
-```{r}
+
+```r
 meanSteps <- aggregate(steps ~ interval, data, mean)
 
 plot(meanSteps$interval, meanSteps$steps,  type = "l",  main="Mean steps", xlab="Interval", ylab="Average steps taken")
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 5-minute interval containing the maximum number of steps:
 
-```{r}
+
+```r
 meanSteps[which(meanSteps$steps == max(meanSteps$steps)), ]
+```
+
+```
+##     interval    steps
+## 104      835 206.1698
 ```
 
 ## Imputing missing values
 
 Number of missing values:
 
-```{r}
+
+```r
 sum(is.na(data))
+```
+
+```
+## [1] 2304
 ```
 
 Impute missing values with the mean of the corresponding interval:
 
-```{r}
+
+```r
 dataImputed <- data
 
 for (i in 1:nrow(dataImputed)) {
@@ -73,12 +126,17 @@ for (i in 1:nrow(dataImputed)) {
 
 Check number of NA values:
 
-```{r}
+
+```r
 sum(is.na(dataImputed))
 ```
 
-```{r}
+```
+## [1] 0
+```
 
+
+```r
 stepsPerDayImputed <- dataImputed %>%
   group_by(date) %>%
   summarise(total = sum(steps))
@@ -86,15 +144,27 @@ stepsPerDayImputed <- dataImputed %>%
 hist(stepsPerDayImputed$total, main="Steps taken per day imputed", xlab="Total steps taken per day", breaks=15)
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+
 Mean of the total number of steps taken per day: 
-```{r}
+
+```r
 mean(stepsPerDayImputed$total, na.rm=TRUE)
+```
+
+```
+## [1] 10766.19
 ```
 
 
 Median of the total number of steps taken per day: 
-```{r}
+
+```r
 median(stepsPerDayImputed$total, na.rm=TRUE)
+```
+
+```
+## [1] 10766.19
 ```
 
 
@@ -104,7 +174,8 @@ There is a slight difference in the median.
 ## Are there differences in activity patterns between weekdays and weekends?
 
 
-```{r}
+
+```r
 # Create gender vector
 dataImputed$day <- weekdays(as.Date(dataImputed$date))
 
@@ -120,10 +191,20 @@ dataImputed$day <- factor(dataImputed$day)
 
 
 head(dataImputed)
-
 ```
 
-```{r}
+```
+##       steps       date interval     day
+## 1 1.7169811 2012-10-01        0 weekday
+## 2 0.3396226 2012-10-01        5 weekday
+## 3 0.1320755 2012-10-01       10 weekday
+## 4 0.1509434 2012-10-01       15 weekday
+## 5 0.0754717 2012-10-01       20 weekday
+## 6 2.0943396 2012-10-01       25 weekday
+```
+
+
+```r
 weekdaySteps <- dataImputed[dataImputed$day == 'weekday', ]
 weekendSteps <- dataImputed[dataImputed$day == 'weekend', ]
 
@@ -132,20 +213,40 @@ weekendStepsMean <- aggregate(steps ~ interval, weekendSteps, mean)
 
 
 head(weekdayStepsMean)
-
-head(weekendStepsMean)
-
 ```
 
-```{r}
+```
+##   interval      steps
+## 1        0 2.25115304
+## 2        5 0.44528302
+## 3       10 0.17316562
+## 4       15 0.19790356
+## 5       20 0.09895178
+## 6       25 1.59035639
+```
 
+```r
+head(weekendStepsMean)
+```
+
+```
+##   interval       steps
+## 1        0 0.214622642
+## 2        5 0.042452830
+## 3       10 0.016509434
+## 4       15 0.018867925
+## 5       20 0.009433962
+## 6       25 3.511792453
+```
+
+
+```r
 par(mfcol=c(1, 2))
 
 
 plot(weekdayStepsMean$interval, weekdayStepsMean$steps, type="l", xlab="interval", ylab="steps", main="weekdays")
 
 plot(weekendStepsMean$interval, weekendStepsMean$steps, type="l", xlab="interval", ylab="steps", main="weekends")
-
-
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
