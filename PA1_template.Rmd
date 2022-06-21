@@ -130,7 +130,6 @@ weekendSteps <- dataImputed[dataImputed$day == 'weekend', ]
 weekdayStepsMean <- aggregate(steps ~ interval, weekdaySteps, mean)
 weekendStepsMean <- aggregate(steps ~ interval, weekendSteps, mean)
 
-
 head(weekdayStepsMean)
 
 head(weekendStepsMean)

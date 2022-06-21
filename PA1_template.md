@@ -27,26 +27,7 @@ data <- read.csv("activity.csv")
 
 ```r
 library(dplyr)
-```
 
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
 stepsPerDay <- data %>%
   group_by(date) %>%
   summarise(total = sum(steps))
@@ -54,7 +35,7 @@ stepsPerDay <- data %>%
 hist(stepsPerDay$total, main="Steps taken per day", xlab="Total steps taken per day", breaks=15)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![plot of chunk unnamed-chunk-19](figure/unnamed-chunk-19-1.png)
 Mean of the total number of steps taken per day: 
 
 ```r
@@ -85,7 +66,7 @@ meanSteps <- aggregate(steps ~ interval, data, mean)
 plot(meanSteps$interval, meanSteps$steps,  type = "l",  main="Mean steps", xlab="Interval", ylab="Average steps taken")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-1.png)
 5-minute interval containing the maximum number of steps:
 
 
@@ -144,7 +125,7 @@ stepsPerDayImputed <- dataImputed %>%
 hist(stepsPerDayImputed$total, main="Steps taken per day imputed", xlab="Total steps taken per day", breaks=15)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+![plot of chunk unnamed-chunk-27](figure/unnamed-chunk-27-1.png)
 
 Mean of the total number of steps taken per day: 
 
@@ -249,4 +230,4 @@ plot(weekdayStepsMean$interval, weekdayStepsMean$steps, type="l", xlab="interval
 plot(weekendStepsMean$interval, weekendStepsMean$steps, type="l", xlab="interval", ylab="steps", main="weekends")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+![plot of chunk unnamed-chunk-32](figure/unnamed-chunk-32-1.png)
