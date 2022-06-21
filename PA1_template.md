@@ -170,7 +170,6 @@ for(i in 1:nrow(dataImputed)) {
 
 dataImputed$day <- factor(dataImputed$day)
 
-
 head(dataImputed)
 ```
 
@@ -191,7 +190,6 @@ weekendSteps <- dataImputed[dataImputed$day == 'weekend', ]
 
 weekdayStepsMean <- aggregate(steps ~ interval, weekdaySteps, mean)
 weekendStepsMean <- aggregate(steps ~ interval, weekendSteps, mean)
-
 
 head(weekdayStepsMean)
 ```

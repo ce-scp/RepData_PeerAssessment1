@@ -118,7 +118,6 @@ for(i in 1:nrow(dataImputed)) {
 
 dataImputed$day <- factor(dataImputed$day)
 
-
 head(dataImputed)
 
 ```

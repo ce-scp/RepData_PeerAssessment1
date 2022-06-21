@@ -328,7 +328,6 @@ for(i in 1:nrow(dataImputed)) {
 
 dataImputed$day &lt;- factor(dataImputed$day)
 
-
 head(dataImputed)
 </code></pre>
 
@@ -346,7 +345,6 @@ weekendSteps &lt;- dataImputed[dataImputed$day == &#39;weekend&#39;, ]
 
 weekdayStepsMean &lt;- aggregate(steps ~ interval, weekdaySteps, mean)
 weekendStepsMean &lt;- aggregate(steps ~ interval, weekendSteps, mean)
-
 
 head(weekdayStepsMean)
 </code></pre>
